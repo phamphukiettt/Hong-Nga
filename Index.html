@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gửi Hồng Nga 💖</title>
+    <style>
+        :root {
+            --pink-bg: #fff0f5;
+            --pink-envelope: #ffb6c1;
+            --pink-text: #ff1493;
+        }
+
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient(circle, #ffffff 0%, #ffe4e1 100%);
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .container {
+            position: relative;
+            text-align: center;
+        }
+
+        /* Phong bì */
+        .envelope {
+            width: 240px;
+            height: 170px;
+            background-color: var(--pink-envelope);
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            transition: all 0.6s ease;
+            position: relative;
+        }
+
+        .envelope::after {
+            content: "Mở quà cho Hồng Nga 🎁";
+            color: white;
+            font-weight: bold;
+            font-size: 15px;
+        }
+
+        /* Ảnh Loopy từ đường dẫn bạn gửi */
+        .loopy-img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            width: 280px; /* Điều chỉnh kích thước vừa vặn */
+            z-index: 5;
+            transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border-radius: 20px;
+        }
+
+        /* Khi mở thiệp */
+        .open .envelope {
+            opacity: 0;
+            transform: scale(0);
+        }
+
+        .open .loopy-img {
+            transform: translate(-50%, -50%) scale(1);
+            animation: wiggle 1s infinite ease-in-out 0.8s;
+        }
+
+        /* Hiệu ứng rung rinh */
+        @keyframes wiggle {
+            0%, 100% { transform: translate(-50%, -50%) rotate(0deg) scale(1); }
+            25% { transform: translate(-50%, -50%) rotate(5deg) scale(1.05); }
+            75% { transform: translate(-50%, -50%) rotate(-5deg) scale(1.05); }
+        }
+
+        .message {
+            position: absolute;
+            bottom: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            color: var(--pink-text);
+            font-size: 26px;
+            font-weight: bold;
+            opacity: 0;
+            transition: 0.5s 1s;
+            text-shadow: 2px 2px white;
+        }
+
+        .open .message {
+            opacity: 1;
+        }
+
+        /* Hiệu ứng hạt trái tim */
+        .heart {
+            position: absolute;
+            pointer-events: none;
+            z-index: 20;
+            animation: burst 1.5s ease-out forwards;
+        }
+
+        @keyframes burst {
+            0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
+            100% { transform: translate(var(--tx), var(--ty)) scale(1.5); opacity: 0; }
+        }
+    </style>
+</head>
+<body onclick="openCard()">
+
+    <div class="container" id="mainCard">
+        <div class="envelope"></div>
+        
+        <img class="loopy-img" src="https://i.etsystatic.com/24640459/r/il/b73910/7715820014/il_680x540.7715820014_71l3.jpg" alt="Loopy Hồng Nga">
+
+        <div class="message">Tèn tén ten! Loopy tới an ủi em nè! 🎀</div>
+    </div>
+
+    <script>
+        function openCard() {
+            const card = document.getElementById('mainCard');
+            if (!card.classList.contains('open')) {
+                card.classList.add('open');
+                
+                // Hiệu ứng nổ tim lấp lánh
+                for (let i = 0; i < 35; i++) {
+                    const heart = document.createElement('div');
+                    heart.innerHTML = ['💖', '🌸', '✨', '🎀'][Math.floor(Math.random() * 4)];
+                    heart.className = 'heart';
+                    heart.style.left = "50%";
+                    heart.style.top = "50%";
+                    
+                    const tx = (Math.random() - 0.5) * 600 + "px";
+                    const ty = (Math.random() - 0.5) * 600 + "px";
+                    heart.style.setProperty('--tx', tx);
+                    heart.style.setProperty('--ty', ty);
+                    
+                    document.body.appendChild(heart);
+                    setTimeout(() => heart.remove(), 1500);
+                }
+            }
+        }
+    </script>
+</body>
+</html>
